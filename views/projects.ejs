@@ -41,8 +41,10 @@
       <tr>
         <td><%= project.title %></td>
         <td>
-          <a class="btn btn-primary btn-sm" href="?sector=<%= project.sector %>"
-            ><%= project.sector %></a
+          <a
+            class="btn btn-primary btn-sm"
+            href="?sector=<%= project.Sector.sector_name %>"
+            ><%= project.Sector.sector_name %></a
           >
         </td>
         <td><%= project.summary_short %></td>

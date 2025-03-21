@@ -37,7 +37,7 @@ app.get("/solutions/projects", (req, res) => {
       })
       .catch((reason) => {
         res.status(404).render("404", {
-          message: `No projects found for sector: ${req.query.sector}`,
+          message: reason,
         });
       });
   } else {
@@ -48,16 +48,16 @@ app.get("/solutions/projects", (req, res) => {
   }
 });
 
-app.get("/solutions/projects/:sectorId", (req, res) => {
+app.get("/solutions/projects/:projectID", (req, res) => {
   projectData
-    .getProjectById(req.params.sectorId) // using sector ID from parameters
+    .getProjectById(req.params.projectID) // using project ID from parameters
     .then((data) => {
       res.render("project", { project: data });
     })
     .catch((reason) => {
-      res.status(404).render("404", {
-        message: `Unable to find requested project.`,
-      });
+      // res.status(404).render("404", {
+      //   message: reason,
+      // });
     });
 });
 
