@@ -108,9 +108,35 @@ const getProjectsBySector = (sector) => {
       },
     })
       .then((data) => {
-        resolve(data[0]);
+        resolve(data);
       })
-      .catch(reject(`Unable to find a project with sector: ${sector}.`));
+      .catch((err) => {
+        reject(`Unable to find a project with sector: ${sector}.`);
+      });
+  });
+};
+
+const addProject = (projectData) => {
+  return new Promise((resolve, reject) => {
+    Project.create(projectData)
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
+const getAllSectors = () => {
+  return new Promise((resolve, reject) => {
+    Sector.findAll()
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
   });
 };
 
@@ -120,4 +146,6 @@ module.exports = {
   getAllProjects,
   getProjectById,
   getProjectsBySector,
+  addProject,
+  getAllSectors,
 };

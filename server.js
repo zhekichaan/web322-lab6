@@ -22,10 +22,40 @@ const path = require("path");
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use(express.json());
+express.urlencoded({ extended: true });
 
 app.get("/", (req, res) => res.render("home"));
 
 app.get("/about", (req, res) => res.render("about"));
+
+app.get("/solutions/addProject", (req, res) => {
+  projectData
+    .getAllSectors()
+    .then((sectorData) => {
+      res.render("addProject", { sectors: sectorData });
+    })
+    .catch((err) => {
+      res.status(404).render("404", {
+        message: err,
+      });
+    });
+});
+
+app.post("/solutions/addProject", (req, res) => {
+  console.log(req.body);
+
+  // projectData
+  //   .addProject(req.body)
+  //   .then(() => {
+  //     res.json(req.body);
+  //   })
+  //   .catch((err) => {
+  //     res.render("500", {
+  //       message: reason,
+  //     });
+  //   });
+});
 
 app.get("/solutions/projects", (req, res) => {
   if (req.query.sector) {
@@ -55,9 +85,9 @@ app.get("/solutions/projects/:projectID", (req, res) => {
       res.render("project", { project: data });
     })
     .catch((reason) => {
-      // res.status(404).render("404", {
-      //   message: reason,
-      // });
+      res.status(404).render("404", {
+        message: reason,
+      });
     });
 });
 
