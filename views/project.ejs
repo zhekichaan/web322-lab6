@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <title>About</title>
+  </head>
+  <body>
+    <%- include('partials/navbar', {page: ''}) %>
+    <!-- Hero -->
+    <div class="hero bg-base-200 h-[300px]">
+      <div class="hero-content text-center">
+        <div class="max-w-xl">
+          <h1 class="text-5xl font-bold"><%= project.title %></h1>
+          <p class="py-6 text-lg">
+            Below, you will find detailed information about the project: <%=
+            project.title %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mx-auto my-[30px] px-[15px]">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <img src="<%= project.feature_img_url %>" alt="" />
+        <div>
+          <p class="prose">
+            <%= project.intro_short %>
+            <br />
+            <br />
+            <span class="font-bold">Impact:</span>
+            <br />
+            <br />
+            <%= project.impact %>
+            <br />
+            <br />
+            More information:
+            <a class="text-primary" href="<%= project.original_source_url %>"
+              ><%= project.original_source_url %></a
+            >
+            <br />
+            <br />
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                fetch("https://dummyjson.com/quotes/random")
+                  .then((response) => response.json())
+                  .then((data) => {
+                    document.getElementById(
+                      "quote"
+                    ).textContent = `"${data.quote}"`;
+                    document.getElementById(
+                      "author"
+                    ).textContent = `- ${data.author}`;
+                  })
+                  .catch((error) =>
+                    console.error("Error fetching quote:", error)
+                  );
+              });
+            </script>
+            <span id="quote"></span>
+            <br />
+            <em><span id="author"></span></em>
+            <br />
+            <br />
+          </p>
+
+          <a
+            class="btn btn-sm btn-primary"
+            href="#"
+            onclick="history.back(); return false;"
+            >Back</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <title>About</title>
+  </head>
+  <body>
+    <%- include('partials/navbar', {page: '/about'}) %>
+    <!-- Hero -->
+    <div class="hero bg-base-200 h-[500px]">
+      <div class="hero-content text-center">
+        <div class="max-w-xl">
+          <h1 class="text-5xl font-bold">All about me ✨</h1>
+          <p class="py-6 text-lg">
+            Hello! I'm Yevhen, a passionate Web Developer with a knack for
+            turning complex problems into simple, beautiful solutions. <br />
+            <br />I specialize in building responsive and user-friendly web
+            applications, combining clean code principles with modern design
+            practices. My expertise spans the full web development stack, from
+            crafting pixel-perfect front-end interfaces using
+            <span class="text-primary">HTML5</span>,
+            <span class="text-primary">CSS3</span>, and
+            <span class="text-primary">JavaScript</span>, to implementing robust
+            back-end solutions. I'm particularly skilled in
+            <span class="text-primary">React.JS</span>,
+            <span class="text-primary">Node.JS</span>, and
+            <span class="text-primary">MongoDB</span>, and I'm always excited to
+            embrace new technologies that improve the web development landscape.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="container mx-auto">
+      <div
+        class="w-[900px] mx-auto my-[50px] grid grid-cols-1 md:grid-cols-2 gap-4"
+      >
+        <div class="w-[400px]">
+          <img
+            src="https://i.pinimg.com/originals/b3/2e/df/b32edfb7da5ef8d5e85740b3100b1b2f.jpg"
+            alt="car picture"
+          />
+          <p class="text-center mt-[10px]">"Picture that represents me"</p>
+        </div>
+        <div class="w-[400px]">
+          <ul class="text-2xl mt-[20px]">
+            <li>
+              <h3>Hobbies:</h3>
+              <ul>
+                <li class="pl-3 text-primary">Sim-Racing</li>
+                <li class="pl-3 text-primary">Coding</li>
+                <li class="pl-3 text-primary">Basketball</li>
+              </ul>
+            </li>
+            <li>
+              <h3>Program: <span class="text-primary">CPA</span></h3>
+            </li>
+            <li>
+              <h3>Favourite Course: <span class="text-primary">WEB</span></h3>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
