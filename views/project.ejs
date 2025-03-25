@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/main.css" />
-    <title>About</title>
+    <title><%= project.title %></title>
   </head>
   <body>
     <%- include('partials/navbar', {page: ''}) %>
@@ -71,6 +71,12 @@
             onclick="history.back(); return false;"
             >Back</a
           >
+          <a
+            class="btn btn-sm btn-primary"
+            href="/solutions/editProject/<%= project.id %>"
+          >
+            Edit
+          </a>
         </div>
       </div>
     </div>

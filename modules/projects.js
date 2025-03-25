@@ -128,6 +128,30 @@ const addProject = (projectData) => {
   });
 };
 
+const editProject = (projectData) => {
+  return new Promise((resolve, reject) => {
+    Project.update(projectData, { where: { id: projectData.id } })
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
+const deleteProject = (projectId) => {
+  return new Promise((resolve, reject) => {
+    Project.destroy({ where: { id: projectId } })
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
 const getAllSectors = () => {
   return new Promise((resolve, reject) => {
     Sector.findAll()
@@ -135,7 +159,7 @@ const getAllSectors = () => {
         resolve(data);
       })
       .catch((err) => {
-        reject(err);
+        reject(err.errors[0].message);
       });
   });
 };
@@ -148,4 +172,6 @@ module.exports = {
   getProjectsBySector,
   addProject,
   getAllSectors,
+  editProject,
+  deleteProject,
 };
