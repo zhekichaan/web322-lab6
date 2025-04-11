@@ -10,13 +10,14 @@
  *
  ********************************************************************************/
 
-const projectData = require("./modules/projects"); // import functions
+const projectData = require("./modules/projects");
+const authData = require("./modules/auth-service"); // import user auth module
 
-projectData.initialize(); // initialize object
+projectData.initialize();
 
-const express = require("express"); // import express package
-const app = express(); // create express application
-const port = 3000; // set port to 3000
+const express = require("express");
+const app = express();
+const port = 3000;
 const path = require("path");
 const bodyParser = require("body-parser");
 
@@ -109,7 +110,6 @@ app.get("/solutions/deleteProject/:id", (req, res) => {
 
 app.get("/solutions/projects", (req, res) => {
   if (req.query.sector) {
-    // if query has a sector parameter, look for projects with this sector
     projectData
       .getProjectsBySector(req.query.sector)
       .then((data) => {
@@ -121,16 +121,15 @@ app.get("/solutions/projects", (req, res) => {
         });
       });
   } else {
-    // if not, just show all projects
     projectData.getAllProjects().then((data) => {
-      res.render("projects", { projects: data }); // send data of all projects
+      res.render("projects", { projects: data });
     });
   }
 });
 
 app.get("/solutions/projects/:projectID", (req, res) => {
   projectData
-    .getProjectById(req.params.projectID) // using project ID from parameters
+    .getProjectById(req.params.projectID)
     .then((data) => {
       res.render("project", { project: data });
     })
@@ -144,7 +143,7 @@ app.get("/solutions/projects/:projectID", (req, res) => {
 app.use((req, res, next) => {
   res.status(404).render("404", {
     message: "I'm sorry, we're unable to find what you're looking for",
-  }); // middleware for any other routes
+  });
 });
 
 // listen for connections
