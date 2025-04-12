@@ -15,12 +15,10 @@ const authData = require("./modules/auth-service"); // import user auth module
 
 const clientSessions = require("client-sessions");
 
-projectData
-  .initialize()
-  .then(authData.initialize)
-  .catch((err) => {
-    console.log(`unable to start server: ${err}`);
-  });
+projectData.initialize();
+authData.initialize().catch((err) => {
+  console.log(`unable to start server: ${err}`);
+});
 
 const express = require("express");
 const app = express();
