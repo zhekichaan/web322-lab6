@@ -15,6 +15,13 @@ const authData = require("./modules/auth-service"); // import user auth module
 
 const clientSessions = require("client-sessions");
 
+projectData
+  .initialize()
+  .then(authData.initialize)
+  .catch((err) => {
+    console.log(`unable to start server: ${err}`);
+  });
+
 const express = require("express");
 const app = express();
 const port = 3000;
@@ -231,14 +238,4 @@ app.use((req, res, next) => {
 });
 
 // listen for connections
-projectData
-  .initialize()
-  .then(authData.initialize)
-  .then(function () {
-    app.listen(port, function () {
-      console.log(`app listening on: ${port}`);
-    });
-  })
-  .catch(function (err) {
-    console.log(`unable to start server: ${err}`);
-  });
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
