@@ -69,34 +69,34 @@ const checkUser = (userData) => {
       .then((users) => {
         if (users.length == 0) {
           reject(`Unable to find user: ${userData.userName}`);
-        } else if (
-          !bcrypt
+        } else {
+          bcrypt
             .compare(userData.password, users[0].password)
             .then((result) => {
-              return result;
-            })
-        ) {
-          reject(`Incorrect Password for user: ${userData.userName}`);
-        } else {
-          if (users[0].loginHistory.length == 8) {
-            users[0].loginHistory.pop();
-          }
+              if (!result) {
+                reject(`Incorrect Password for user: ${userData.userName}`);
+              } else {
+                if (users[0].loginHistory.length == 8) {
+                  users[0].loginHistory.pop();
+                }
 
-          users[0].loginHistory.unshift({
-            dateTime: new Date().toString(),
-            userAgent: userData.userAgent,
-          });
+                users[0].loginHistory.unshift({
+                  dateTime: new Date().toString(),
+                  userAgent: userData.userAgent,
+                });
 
-          User.updateOne(
-            { userName: users[0].userName },
-            { $set: { loginHistory: users[0].loginHistory } }
-          )
-            .exec()
-            .then(() => {
-              resolve(users[0]);
-            })
-            .catch((err) => {
-              reject(`There was an error verifying the user: ${err}`);
+                User.updateOne(
+                  { userName: users[0].userName },
+                  { $set: { loginHistory: users[0].loginHistory } }
+                )
+                  .exec()
+                  .then(() => {
+                    resolve(users[0]);
+                  })
+                  .catch((err) => {
+                    reject(`There was an error verifying the user: ${err}`);
+                  });
+              }
             });
         }
       })

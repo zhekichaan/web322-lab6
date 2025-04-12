@@ -1,12 +1,12 @@
 /********************************************************************************
- * WEB322 – Assignment 05
+ * WEB322 – Assignment 06
  *
  * I declare that this assignment is my own work in accordance with Seneca's
  * Academic Integrity Policy:
  *
  * https://www.senecapolytechnic.ca/about/policies/academic-integrity-policy.html
  *
- * Name: Yevhen Chernytskyi Student ID: 166613232 Date: Mon Mar 24
+ * Name: Yevhen Chernytskyi Student ID: 166613232 Date: Fri 11 April
  *
  ********************************************************************************/
 
@@ -14,11 +14,6 @@ const projectData = require("./modules/projects");
 const authData = require("./modules/auth-service"); // import user auth module
 
 const clientSessions = require("client-sessions");
-
-projectData.initialize();
-authData.initialize().catch((err) => {
-  console.log(`unable to start server: ${err}`);
-});
 
 const mongoose = require("mongoose");
 const express = require("express");
