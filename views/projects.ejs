@@ -11,12 +11,12 @@
     <div class="hero bg-base-200 h-[500px]">
       <div class="hero-content text-center">
         <div class="max-w-lg">
-          <h1 class="text-5xl font-bold">Projects 🚧</h1>
+          <h1 class="text-4xl font-bold">Projects 🚧</h1>
           <p class="py-6">
             Browse the current list of Projects in our database. Click the theme
             to filter by sectors such as:
           </p>
-          <ul class="flex justify-evenly">
+          <ul class="flex flex-col md:flex-row gap-[10px] justify-evenly">
             <li>
               <a class="btn btn-primary" href="/solutions/projects?sector=ind"
                 >Industry</a
@@ -36,24 +36,26 @@
         </div>
       </div>
     </div>
-    <table class="table max-w-[95%] mx-auto">
-      <% projects.forEach(project=>{ %>
-      <tr>
-        <td><%= project.title %></td>
-        <td>
-          <a
-            class="btn btn-primary btn-sm"
-            href="?sector=<%= project.Sector.sector_name %>"
-            ><%= project.Sector.sector_name %></a
-          >
-        </td>
-        <td><%= project.summary_short %></td>
-        <td>
-          <a class="btn btn-sm" href="projects/<%= project.id %>">Details</a><%=
-          project.company %>
-        </td>
-      </tr>
-      <% }) %>
-    </table>
+    <div class="overflow-x-auto overflow-y-hidden">
+      <table class="table max-w-[95%] mx-auto">
+        <% projects.forEach(project=>{ %>
+        <tr>
+          <td><%= project.title %></td>
+          <td>
+            <a
+              class="btn btn-primary btn-sm"
+              href="?sector=<%= project.Sector.sector_name %>"
+              ><%= project.Sector.sector_name %></a
+            >
+          </td>
+          <td><%= project.summary_short %></td>
+          <td>
+            <a class="btn btn-sm" href="projects/<%= project.id %>">Details</a
+            ><%= project.company %>
+          </td>
+        </tr>
+        <% }) %>
+      </table>
+    </div>
   </body>
 </html>

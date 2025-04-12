@@ -71,12 +71,14 @@
             onclick="history.back(); return false;"
             >Back</a
           >
+          <% if(session.user) { %>
           <a
             class="btn btn-sm btn-primary"
             href="/solutions/editProject/<%= project.id %>"
           >
             Edit
           </a>
+          <% } %>
         </div>
       </div>
     </div>
