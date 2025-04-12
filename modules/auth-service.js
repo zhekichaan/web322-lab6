@@ -36,7 +36,7 @@ const registerUser = (userData) => {
   return new Promise(function (resolve, reject) {
     if (userData.password == userData.password2) {
       bcrypt
-        .hash(userData.password, 10)
+        .hashSync(userData.password, 10)
         .then((hash) => {
           userData.password = hash;
 
