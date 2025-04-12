@@ -20,6 +20,7 @@ authData.initialize().catch((err) => {
   console.log(`unable to start server: ${err}`);
 });
 
+const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 const port = 3000;
@@ -30,6 +31,9 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(express.json());
+
+mongoose.connect(process.env.MONGODB);
+
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(
