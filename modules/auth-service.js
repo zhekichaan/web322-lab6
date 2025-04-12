@@ -15,19 +15,21 @@ let userSchema = new Schema({
   loginHistory: [{ dateTime: Date, userAgent: String }],
 });
 
-let User = mongoose.model("users", userSchema);
+let User;
 
-const initialize = () => {
-  return new Promise(function (resolve, reject) {
-    let db = mongoose.createConnection(process.env.MONGODB);
-    db.on("error", (err) => {
-      reject(err); // reject the promise with the provided error
-    });
-    db.once("open", () => {
-      User = db.model("users", userSchema);
-      resolve();
-    });
-  });
+const initialize = async () => {
+  try {
+    if (mongoose.connection.readyState === 0) {
+      await mongoose.connect(process.env.MONGODB, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+    }
+
+    User = mongoose.model("users", userSchema);
+  } catch (err) {
+    throw err;
+  }
 };
 
 const registerUser = (userData) => {
