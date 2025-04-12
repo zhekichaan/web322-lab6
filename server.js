@@ -235,5 +235,14 @@ app.use((req, res, next) => {
   });
 });
 
-// listen for connections
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+projectData
+  .initialize()
+  .then(authData.initialize)
+  .then(function () {
+    app.listen(port, function () {
+      console.log(`app listening on: ${port}`);
+    });
+  })
+  .catch(function (err) {
+    console.log(`unable to start server: ${err}`);
+  });
