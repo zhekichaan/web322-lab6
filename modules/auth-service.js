@@ -15,50 +15,49 @@ let userSchema = new Schema({
   loginHistory: [{ dateTime: Date, userAgent: String }],
 });
 
-let User;
+let User = mongoose.model("users", userSchema);
 
-const initialize = async () => {
-  try {
-    if (mongoose.connection.readyState === 0) {
-      await mongoose.connect(process.env.MONGODB, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
-    }
-
-    User = mongoose.model("users", userSchema);
-  } catch (err) {
-    throw err;
-  }
+const initialize = () => {
+  return new Promise(function (resolve, reject) {
+    let db = mongoose.createConnection(process.env.MONGODB);
+    db.on("error", (err) => {
+      reject(err); // reject the promise with the provided error
+    });
+    db.once("open", () => {
+      User = db.model("users", userSchema);
+      resolve();
+    });
+  });
 };
 
 const registerUser = (userData) => {
-  return new Promise((resolve, reject) => {
-    if (userData.password !== userData.password2) {
-      reject("Passwords do not match");
-      return;
-    }
+  return new Promise(function (resolve, reject) {
+    if (userData.password == userData.password2) {
+      bcrypt
+        .hash(userData.password, 10)
+        .then((hash) => {
+          userData.password = hash;
 
-    try {
-      const hash = bcrypt.hashSync(userData.password, 10);
-      userData.password = hash;
+          let newUser = new User(userData);
 
-      const newUser = new User(userData);
-
-      newUser
-        .save()
-        .then(() => {
-          resolve();
+          newUser
+            .save()
+            .then(() => {
+              resolve(); // if everything is good -> resolve
+            })
+            .catch((err) => {
+              if (err.code == 11000) {
+                reject("User Name already taken"); // if error code is 11000 -> reject (duplicate key)
+              } else {
+                reject(`There was an error creating the user: ${err}`); // any other error -> reject
+              }
+            });
         })
-        .catch((err) => {
-          if (err.code === 11000) {
-            reject("User Name already taken");
-          } else {
-            reject(`There was an error creating the user: ${err}`);
-          }
+        .catch(() => {
+          reject("There was an error encrypting the password");
         });
-    } catch (err) {
-      reject(`There was an error encrypting the password: ${err}`);
+    } else {
+      reject("Passwords do not match");
     }
   });
 };
